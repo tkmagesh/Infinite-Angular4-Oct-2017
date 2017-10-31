@@ -16,8 +16,14 @@ export class MathCalculatorModel{
 	divide(){
 		this.result = this.number1 / this.number2;
 	}
+
+	clear(){
+		this.number1 = 0;
+		this.number2 = 0;
+		this.result = 0;
+	}
 }
 
 export class Dummy{
-	
+
 }

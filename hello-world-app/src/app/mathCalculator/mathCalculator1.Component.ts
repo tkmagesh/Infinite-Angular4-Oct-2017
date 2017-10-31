@@ -7,41 +7,20 @@ import { MathCalculatorModel } from './MathCalculatorModel';
 	template : `
 		<h1>Math Calculator - 1</h1>
 		<hr>
-		<input type="number" #txtNumber1>
-		<input type="number" #txtNumber2>
-		<input type="button" value="Add"  (click)="addClick(txtNumber1.value, txtNumber2.value)">
-		<input type="button" value="Subtract" (click)="subtractClick(txtNumber1.value, txtNumber2.value)">      
-		<input type="button" value="Multiply" (click)="multiplyClick(txtNumber1.value, txtNumber2.value)">
-		<input type="button" value="Divide" (click)="divideClick(txtNumber1.value, txtNumber2.value)">
-		<div>{{result}}</div>
+		<input type="number" [(ngModel)]="model.number1">
+		<input type="number" [(ngModel)]="model.number2">
+		<input type="button" value="Add"  (click)="model.add()">
+		<input type="button" value="Subtract" (click)="model.subtract()">      
+		<input type="button" value="Multiply" (click)="model.multiply()">
+		<input type="button" value="Divide" (click)="model.divide()">
+
+		<div>{{model.result}}</div>
+		<input type="button" value="Reset" (click)="model.clear()"/>
 	`
 })
 export class MathCalculator1Component{
-	result : number = 0;
+	
 	model : MathCalculatorModel = new MathCalculatorModel();
 
-	addClick(number1Value, number2Value){
-		this.model.number1 = parseInt(number1Value, 10);
-		this.model.number2 = parseInt(number2Value, 10);
-		this.model.add();
-		this.result = this.model.result;
-	}
-	subtractClick(number1Value, number2Value){
-		this.model.number1 = parseInt(number1Value, 10);
-		this.model.number2 = parseInt(number2Value, 10);
-		this.model.subtract();
-		this.result = this.model.result;
-	}
-	multiplyClick(number1Value, number2Value){
-		this.model.number1 = parseInt(number1Value, 10);
-		this.model.number2 = parseInt(number2Value, 10);
-		this.model.multiply();
-		this.result = this.model.result;
-	}
-	divideClick(number1Value, number2Value){
-		this.model.number1 = parseInt(number1Value, 10);
-		this.model.number2 = parseInt(number2Value, 10);
-		this.model.divide();
-		this.result = this.model.result;
-	}
+	
 }
