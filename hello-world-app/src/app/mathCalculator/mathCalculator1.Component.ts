@@ -20,7 +20,15 @@ import { MathCalculatorModel } from './MathCalculatorModel';
 })
 export class MathCalculator1Component{
 	
-	model : MathCalculatorModel = new MathCalculatorModel();
+	/*model : MathCalculatorModel ;
+
+	constructor( mathCalcualator : MathCalculatorModel){
+		this.model = mathCalcualator;
+	}*/
+
+	constructor(private model : MathCalculatorModel){
+		
+	}
 
 	
 }

@@ -7,6 +7,7 @@ import { GreeterComponent } from './greeter/greeter.component';
 import { MathCalculator1Component } from './mathCalculator/mathCalculator1.Component';
 import { MathCalculator2Component } from './mathCalculator/mathCalculator2.Component';
 import { MathResultComponent } from './mathCalculator/mathResult.component';
+import { MathCalculatorModel } from './mathCalculator/MathCalculatorModel';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { MathResultComponent } from './mathCalculator/mathResult.component';
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [MathCalculatorModel],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

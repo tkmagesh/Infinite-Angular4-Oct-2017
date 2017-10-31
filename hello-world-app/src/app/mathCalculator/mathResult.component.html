@@ -12,4 +12,4 @@
 	}
 </style>
 <!-- <div class="result" [ngClass]="{'positive' : data >=0, 'negative' : data < 0 }">{{data}}</div> -->
-<div class="result" [ngClass]="resultClass">{{data}}</div>
+<div class="result" [ngClass]="resultClass">{{ data | currency:'INR' }}</div>

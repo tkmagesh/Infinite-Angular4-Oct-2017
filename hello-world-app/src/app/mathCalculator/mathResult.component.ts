@@ -20,4 +20,8 @@ export class MathResultComponent{
 			negative : this.data < 0
 		}
 	}
+
+	isGreaterThan1000(){
+		return this.data > 1000;
+	}
 }
