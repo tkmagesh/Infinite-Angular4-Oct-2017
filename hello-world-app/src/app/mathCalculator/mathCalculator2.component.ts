@@ -13,8 +13,9 @@ import { MathCalculatorModel } from './MathCalculatorModel';
 			<option value="divide">Divide</option>
 		</select>
 		<input type="number" [(ngModel)]="model.number2">
-		<input type="button" value="Calculate" (click)="calculate()">
-		<div>{{model.result}}</div>
+		<!-- <input type="button" value="Calculate" (click)="calculate()"> -->
+		<input type="button" value="Calculate" (click)="model[operator]()">
+		<math-result [data]="model.result"></math-result>
 	`
 })
 export class MathCalculator2Component{
@@ -23,7 +24,7 @@ export class MathCalculator2Component{
 	operator : string = '';
 
 	calculate(){
-		switch (this.operator) {
+		/*switch (this.operator) {
 			case "add":
 				this.model.add();
 				break;
@@ -36,6 +37,7 @@ export class MathCalculator2Component{
 			case "divide":
 				this.model.divide();
 				break;
-		}
+		}*/
+		this.model[this.operator]();
 	}
 }

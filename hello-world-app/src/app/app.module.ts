@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { GreeterComponent } from './greeter/greeter.component';
 import { MathCalculator1Component } from './mathCalculator/mathCalculator1.Component';
 import { MathCalculator2Component } from './mathCalculator/mathCalculator2.Component';
+import { MathResultComponent } from './mathCalculator/mathResult.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GreeterComponent,
     MathCalculator1Component,
-    MathCalculator2Component
+    MathCalculator2Component,
+    MathResultComponent
   ],
   imports: [
     BrowserModule,

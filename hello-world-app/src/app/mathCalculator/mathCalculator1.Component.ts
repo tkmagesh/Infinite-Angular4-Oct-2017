@@ -14,7 +14,7 @@ import { MathCalculatorModel } from './MathCalculatorModel';
 		<input type="button" value="Multiply" (click)="model.multiply()">
 		<input type="button" value="Divide" (click)="model.divide()">
 
-		<div>{{model.result}}</div>
+		<math-result [data]="model.result"></math-result>
 		<input type="button" value="Reset" (click)="model.clear()"/>
 	`
 })
