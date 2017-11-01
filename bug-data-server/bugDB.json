@@ -11,6 +11,11 @@
       "name": "A dummy bug",
       "isClosed": false,
       "createdAt": "2017-11-01T11:29:19.160Z"
+    },
+    {
+      "id": 11,
+      "name": "f asdjlfdasj fl;asdfdasf das",
+      "isClosed": false
     }
   ],
   "projects": [
