@@ -23,8 +23,8 @@ import { BugOperationsService } from './services/BugOperations.service';
 		</section>
 		<section class="edit">
 			<label for="">Bug Name :</label>
-			<input type="text" #txtBugName>
-			<input type="button" value="Create New" (click)="createNewClicked(txtBugName.value)">
+			<input type="text" [(ngModel)]="newBugName">
+			<input type="button" value="Create New" (click)="createNewClicked()">
 		</section>
 		<section class="list">
 			<ol>
@@ -46,22 +46,28 @@ export class BugTrackerComponent{
 	bugSortBy : string = '';
 	bugSortDescending : boolean =  false;
 
-	constructor(private bugOperations : BugOperationsService){
+	newBugName : string = '';
 
+	constructor(private bugOperations : BugOperationsService){
+		this.bugs.push(this.bugOperations.createNew('Server communication failure'));
+		this.bugs.push(this.bugOperations.createNew('Data integrity checks failed'));
+		this.bugs.push(this.bugOperations.createNew('User actions not recognized'));
+		this.bugs.push(this.bugOperations.createNew('Application not responding'));
 	}
 
-	createNewClicked(bugName : string){
+	createNewClicked(){
 		/*let newBug : Bug = {
 			name : bugName,
 			isClosed : false
 		};*/
-		let newBug = this.bugOperations.createNew(bugName);
-		this.bugs.push(newBug);
+		let newBug = this.bugOperations.createNew(this.newBugName);
+		this.bugs = [...this.bugs, newBug];
 	}
 
-	bugClicked(bug){
+	bugClicked(bugToToggle){
 		/*bug.isClosed = !bug.isClosed;*/
-		this.bugOperations.toggle(bug);
+		let toggledBug = this.bugOperations.toggle(bugToToggle);
+		this.bugs = this.bugs.map(bug => bug === bugToToggle ? toggledBug : bug);
 	}
 	removeClosedClicked(){
 		for(let index = this.bugs.length-1; index >= 0; index--){

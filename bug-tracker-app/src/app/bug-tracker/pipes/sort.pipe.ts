@@ -6,9 +6,11 @@ interface IComparer{
 
 
 @Pipe({
-	name : 'sort'
+	name : 'sort',
+	pure : true
 })
 export class SortPipe implements PipeTransform{
+
 	private getComparer(attrName : string) : IComparer {
 		return function(item1 : any, item2 : any) : number {
 			if (item1[attrName] < item2[attrName]) return -1;
@@ -28,7 +30,9 @@ export class SortPipe implements PipeTransform{
 			return comparer(item1, item2) * -1
 		}
 	}
+
 	transform(list: any[], attrName : string, isDescending : boolean = false): any{
+		console.log('sort transform invoked');
 		let comparer = this.getComparer(attrName);
 		if (isDescending){
 			comparer = this.getDescendingComparer(comparer);
