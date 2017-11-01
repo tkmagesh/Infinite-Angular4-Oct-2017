@@ -8,11 +8,7 @@ import { BugStorageService } from './services/BugStorage.service';
 	template : `
 		<h1>Bug Tracker</h1>
 		<hr>
-		<section class="stats">
-			<span class="closed">{{ bugs | closedCount }}</span>
-			<span> / </span>
-			<span>{{bugs.length}}</span>
-		</section>
+		<bug-stats [data]="bugs"></bug-stats>
 		<section class="sort">
 			<label for="">Order By :</label>
 			<select [(ngModel)]="bugSortBy">
@@ -22,18 +18,14 @@ import { BugStorageService } from './services/BugStorage.service';
 			<label for="">Descending ? :</label>
 			<input type="checkbox" [(ngModel)]="bugSortDescending">
 		</section>
-		<section class="edit">
-			<label for="">Bug Name :</label>
-			<input type="text" [(ngModel)]="newBugName">
-			<input type="button" value="Create New" (click)="createNewClicked()">
-		</section>
+		<bug-edit (create)="bugCreated($event)"></bug-edit>
 		<section class="list">
 			<ol>
 				<li *ngFor="let bug of ( bugs | sort:bugSortBy:bugSortDescending )">
 					<span class="bugname" (click)="bugClicked(bug)" 
 						[ngClass]="{closed : bug.isClosed}"
 						title="{{bug.name}}">{{bug.name | trimText:40 }}</span>
-					<div class="datetime">[Created At]</div>
+					<div class="datetime">{{bug.createdAt | elapsed}}</div>
 				</li>
 			</ol>
 			<input type="button" value="Remove Closed" (click)="removeClosedClicked()">
@@ -56,12 +48,7 @@ export class BugTrackerComponent implements OnInit{
 	ngOnInit(){
 		this.bugs = this.bugStorage.getAll();
 	}
-	createNewClicked(){
-		/*let newBug : Bug = {
-			name : bugName,
-			isClosed : false
-		};*/
-		let newBug = this.bugStorage.addNew(this.newBugName);
+	bugCreated(newBug : Bug){
 		this.bugs = [...this.bugs, newBug];
 	}
 
@@ -82,7 +69,7 @@ export class BugTrackerComponent implements OnInit{
 		this.bugs
 			.filter(bug => bug.isClosed)
 			.forEach(closedBug => this.bugStorage.remove(closedBug));
-			
+
 		this.bugs = this.bugStorage.getAll();
 
 	}
