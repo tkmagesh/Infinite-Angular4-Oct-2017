@@ -32,7 +32,6 @@ export class SortPipe implements PipeTransform{
 	}
 
 	transform(list: any[], attrName : string, isDescending : boolean = false): any{
-		console.log('sort transform invoked');
 		let comparer = this.getComparer(attrName);
 		if (isDescending){
 			comparer = this.getDescendingComparer(comparer);
