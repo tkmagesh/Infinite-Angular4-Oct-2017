@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Bug } from '../models/Bug';
-import { BugServerService } from '../services/BugServer.service';
-
+import { BugStorageService } from '../services/BugStorage.service';
 
 @Component({	
 	selector: 'bug-item',
@@ -22,7 +21,7 @@ export class BugItemComponent implements OnInit {
 	@Output()
 	toggle : EventEmitter<Bug> = new EventEmitter<Bug>();
 
-	constructor(private bugServer : BugServerService) {
+	constructor(private bugStorage : BugStorageService) {
 	}
 
 
@@ -32,9 +31,7 @@ export class BugItemComponent implements OnInit {
 
 	bugClicked(bugToToggle){
 		/*bug.isClosed = !bug.isClosed;*/
-		this.bugServer
-			.toggle(bugToToggle)
-			.subscribe(toggledBug => this.toggle.emit(toggledBug));
-		
+		let toggledBug = this.bugStorage.toggle(bugToToggle);
+		this.toggle.emit(toggledBug);
 	}
 }

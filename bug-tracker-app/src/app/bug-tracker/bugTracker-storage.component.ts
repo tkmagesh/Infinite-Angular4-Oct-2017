@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Bug } from './models/Bug';
-import { BugServerService } from './services/BugServer.service';
+import { BugStorageService } from './services/BugStorage.service';
 
 
 @Component({
@@ -41,17 +41,12 @@ export class BugTrackerComponent implements OnInit{
 
 	newBugName : string = '';
 
-	constructor(private bugServer : BugServerService){
+	constructor(private bugStorage : BugStorageService){
 		
 	}
 
 	ngOnInit(){
-		this.loadBugs();
-	}
-	private loadBugs(){
-		this.bugServer
-			.getAll()
-			.subscribe(bugs => this.bugs = bugs);
+		this.bugs = this.bugStorage.getAll();
 	}
 	bugCreated(newBug : Bug){
 		this.bugs = [...this.bugs, newBug];
@@ -61,13 +56,19 @@ export class BugTrackerComponent implements OnInit{
 		this.bugs = this.bugs.map(bug => bug.id === toggledBug.id ? toggledBug : bug);
 	}
 	removeClosedClicked(){
-		
+		/*for(let index = this.bugs.length-1; index >= 0; index--){
+			if (this.bugs[index].isClosed)
+				this.bugs.splice(index, 1);
+		}*/
+
+		//this.bugs = this.bugs.filter(bug => !bug.isClosed);
+
+		//remove the closed bugs
 		this.bugs
 			.filter(bug => bug.isClosed)
-			.forEach(closedBug => this.bugServer.remove(closedBug).subscribe(_ => {}));
+			.forEach(closedBug => this.bugStorage.remove(closedBug));
 
-		this.loadBugs();
-		//this.bugs = this.bugServer.getAll();
+		this.bugs = this.bugStorage.getAll();
 
 	}
 
