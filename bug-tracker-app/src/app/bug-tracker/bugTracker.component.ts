@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Bug } from './models/Bug';
-import { BugOperationsService } from './services/BugOperations.service';
+import { BugStorageService } from './services/BugStorage.service';
+
 
 @Component({
 	selector : 'bug-tracker',
@@ -40,7 +41,7 @@ import { BugOperationsService } from './services/BugOperations.service';
 	`,
 	styleUrls : []
 })
-export class BugTrackerComponent{
+export class BugTrackerComponent implements OnInit{
 	bugs : Bug[] = [];
 
 	bugSortBy : string = '';
@@ -48,25 +49,25 @@ export class BugTrackerComponent{
 
 	newBugName : string = '';
 
-	constructor(private bugOperations : BugOperationsService){
-		this.bugs.push(this.bugOperations.createNew('Server communication failure'));
-		this.bugs.push(this.bugOperations.createNew('Data integrity checks failed'));
-		this.bugs.push(this.bugOperations.createNew('User actions not recognized'));
-		this.bugs.push(this.bugOperations.createNew('Application not responding'));
+	constructor(private bugStorage : BugStorageService){
+		
 	}
 
+	ngOnInit(){
+		this.bugs = this.bugStorage.getAll();
+	}
 	createNewClicked(){
 		/*let newBug : Bug = {
 			name : bugName,
 			isClosed : false
 		};*/
-		let newBug = this.bugOperations.createNew(this.newBugName);
+		let newBug = this.bugStorage.addNew(this.newBugName);
 		this.bugs = [...this.bugs, newBug];
 	}
 
 	bugClicked(bugToToggle){
 		/*bug.isClosed = !bug.isClosed;*/
-		let toggledBug = this.bugOperations.toggle(bugToToggle);
+		let toggledBug = this.bugStorage.toggle(bugToToggle);
 		this.bugs = this.bugs.map(bug => bug === bugToToggle ? toggledBug : bug);
 	}
 	removeClosedClicked(){
@@ -75,7 +76,15 @@ export class BugTrackerComponent{
 				this.bugs.splice(index, 1);
 		}*/
 
-		this.bugs = this.bugs.filter(bug => !bug.isClosed);
+		//this.bugs = this.bugs.filter(bug => !bug.isClosed);
+
+		//remove the closed bugs
+		this.bugs
+			.filter(bug => bug.isClosed)
+			.forEach(closedBug => this.bugStorage.remove(closedBug));
+			
+		this.bugs = this.bugStorage.getAll();
+
 	}
 
 
