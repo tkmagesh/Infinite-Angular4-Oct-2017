@@ -13,6 +13,7 @@ import { BugStorageService } from './bug-tracker/services/BugStorage.service';
 
 import { BugStatsComponent } from './bug-tracker/views/bugStats.component';
 import { BugEditComponent } from './bug-tracker/views/bugEdit.component';
+import { BugItemComponent } from './bug-tracker/views/bugItem.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { BugEditComponent } from './bug-tracker/views/bugEdit.component';
     BugTrackerComponent,
     ClosedCountPipe,
     BugStatsComponent,
-    BugEditComponent
+    BugEditComponent,
+    BugItemComponent
   ],
   imports: [
     BrowserModule,

@@ -21,12 +21,12 @@ import { BugStorageService } from './services/BugStorage.service';
 		<bug-edit (create)="bugCreated($event)"></bug-edit>
 		<section class="list">
 			<ol>
-				<li *ngFor="let bug of ( bugs | sort:bugSortBy:bugSortDescending )">
-					<span class="bugname" (click)="bugClicked(bug)" 
-						[ngClass]="{closed : bug.isClosed}"
-						title="{{bug.name}}">{{bug.name | trimText:40 }}</span>
-					<div class="datetime">{{bug.createdAt | elapsed}}</div>
-				</li>
+				<bug-item 
+					*ngFor="let bug of ( bugs | sort:bugSortBy:bugSortDescending )"
+					[data]="bug"
+					(toggle)="onToggle($event)"
+				>
+				</bug-item>
 			</ol>
 			<input type="button" value="Remove Closed" (click)="removeClosedClicked()">
 		</section>
@@ -52,10 +52,8 @@ export class BugTrackerComponent implements OnInit{
 		this.bugs = [...this.bugs, newBug];
 	}
 
-	bugClicked(bugToToggle){
-		/*bug.isClosed = !bug.isClosed;*/
-		let toggledBug = this.bugStorage.toggle(bugToToggle);
-		this.bugs = this.bugs.map(bug => bug === bugToToggle ? toggledBug : bug);
+	onToggle(toggledBug){
+		this.bugs = this.bugs.map(bug => bug.id === toggledBug.id ? toggledBug : bug);
 	}
 	removeClosedClicked(){
 		/*for(let index = this.bugs.length-1; index >= 0; index--){
